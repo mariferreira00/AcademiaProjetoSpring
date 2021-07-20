@@ -3,6 +3,7 @@ package academiaJava.projetoSpring.controller;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,62 +12,72 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import academiaJava.projetoSpring.Repository.AlunoRepository;
 import academiaJava.projetoSpring.model.Aluno;
 
 
 @RestController
-@RequestMapping(value = "/aluno")
+@RequestMapping("/aluno")
 public class AlunoController {
-	private List<Aluno> alunos = new ArrayList<Aluno>();
+	
+
+	@Autowired
+	private AlunoRepository alunoRepository;
+
 	
 	@PostMapping("/post")
-	public String criarAluno(@RequestBody Aluno aluno) {
-		alunos.add(aluno);
-		return "Aluno cadastrado com sucesso!";
-	}
+	public Aluno createAluno(@RequestBody Aluno aluno) {
+		
+		return this.alunoRepository.save(aluno);
 
+	}
+	
 	@GetMapping("/get")
-	public List<Aluno> exibirAlunos() {
-		return alunos;
+	public List<Aluno> getAluno() {
+		return this.alunoRepository.findAll();
 	}
-
+	
 	@GetMapping("/get/{id}")
-	public Aluno exibirAluno(@PathVariable("id") int id) {
-		Aluno wanted = null;
-		for (Aluno wtd : alunos) {
-			if (wtd.getId() == id) {
-				wanted = wtd;
-				System.out.println(wanted.toString());
-			}
+    public Optional<Aluno> getAlunos(@PathVariable("id") int id) {
+		return this.alunoRepository.findById(id);
+    	}
+    
+	@PutMapping("/update/{id}")
+	public String attAluno(@RequestBody Aluno alunoNovo, @PathVariable("id") int id) {
+		
+		Optional<Aluno> alunoAnt = this.alunoRepository.findById(id);
+		if (alunoAnt.isPresent()) {
+			alunoRepository.delete(alunoAnt.get());
+			Aluno aluno = alunoAnt.get();
+			aluno.setNome(alunoNovo.getNome());
+			aluno.setIdade(alunoNovo.getIdade());
+			aluno.setNomeCurso(alunoNovo.getNomeCurso());
+			alunoRepository.save(aluno);
+			
+			return "Os dados do aluno foram alterados com sucesso!";
+		}else {
+			return "Ops... Não encontramos nenhum aluno com este id em nosso sistema, tente novamente!";
 		}
-		return wanted;
 	}
-
-	@PutMapping("/put/{id}")
-	public void attAluno(@PathVariable("id") int id, @RequestBody Aluno aluno) {
-		for (int i = 0; i < alunos.size(); i++) {
-			Aluno wtd = alunos.get(i);
-			if (wtd.getId() == id) {
-				alunos.set(i, aluno);
-				System.out.println("Os dados do aluno foram ATUALIZADOS com sucesso!");
-			}
-		}
-	}
-
+	
+	
 	@DeleteMapping("/delete/{id}")
-	public void apagarAluno(@PathVariable("id") int id) {
-		int i = -1;
-		Aluno wanted = null;
-		for (Aluno wtd : alunos) {
-			if (wtd.getId() == id) {
-				i = alunos.indexOf(wtd);
-				wanted = wtd;
-				break;
-			}
+	public  String deleteAluno(@PathVariable("id") int id) {
+		
+		Optional<Aluno> alunoEncontrado = this.alunoRepository.findById(id);
+		
+		if (alunoEncontrado.isPresent()) {
+			alunoRepository.delete(alunoEncontrado.get());
+			
+			return "O Aluno selecionado foi excluído com sucesso!";
+		}else {
+			
+			return "Ops... Não encontramos nenhum aluno com este id em nosso sistema, tente novamente!";
 		}
-		alunos.remove(i);
+		
 	}
+	
 
-
-
+	
 }

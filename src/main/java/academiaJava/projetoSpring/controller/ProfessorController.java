@@ -2,6 +2,8 @@ package academiaJava.projetoSpring.controller;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +26,19 @@ public class ProfessorController {
 	private ProfessorRepository professorRepository;
 
 	@PostMapping("/post")
-	public Professor createProfessor(@RequestBody Professor professor) {
+	public Professor criarProfessor(@RequestBody @Valid Professor professor) {
 
 		return this.professorRepository.save(professor);
 
 	}
 
 	@GetMapping("/get")
-	public List<Professor> viewProfessor() {
+	public List<Professor> getProfessor() {
 		return this.professorRepository.findAll();
 	}
 
 	@GetMapping("/get/{id}")
-	public Optional<Professor> viewProfessor(@PathVariable("id") int id) {
+	public Optional<Professor> getProfessores(@PathVariable("id") int id) {
 		return this.professorRepository.findById(id);
 	}
 	

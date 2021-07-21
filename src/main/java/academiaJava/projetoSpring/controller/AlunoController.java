@@ -3,6 +3,8 @@ package academiaJava.projetoSpring.controller;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +22,14 @@ import academiaJava.projetoSpring.model.Aluno;
 @RestController
 @RequestMapping("/aluno")
 public class AlunoController {
-	
+
 
 	@Autowired
 	private AlunoRepository alunoRepository;
 
 	
 	@PostMapping("/post")
-	public Aluno createAluno(@RequestBody Aluno aluno) {
+	public Aluno createAluno(@Valid @RequestBody Aluno aluno){
 		
 		return this.alunoRepository.save(aluno);
 
@@ -44,15 +46,15 @@ public class AlunoController {
     	}
     
 	@PutMapping("/update/{id}")
-	public String attAluno(@RequestBody Aluno alunoNovo, @PathVariable("id") int id) {
+	public String attAluno(@RequestBody Aluno alunoN, @PathVariable("id") int id) {
 		
 		Optional<Aluno> alunoAnt = this.alunoRepository.findById(id);
 		if (alunoAnt.isPresent()) {
 			alunoRepository.delete(alunoAnt.get());
 			Aluno aluno = alunoAnt.get();
-			aluno.setNome(alunoNovo.getNome());
-			aluno.setIdade(alunoNovo.getIdade());
-			aluno.setNomeCurso(alunoNovo.getNomeCurso());
+			aluno.setNome(alunoN.getNome());
+			aluno.setIdade(alunoN.getIdade());
+			aluno.setNomeCurso(alunoN.getNomeCurso());
 			alunoRepository.save(aluno);
 			
 			return "Os dados do aluno foram alterados com sucesso!";
@@ -60,6 +62,7 @@ public class AlunoController {
 			return "Ops... Não encontramos nenhum aluno com este id em nosso sistema, tente novamente!";
 		}
 	}
+
 	
 	
 	@DeleteMapping("/delete/{id}")

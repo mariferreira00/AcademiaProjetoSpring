@@ -28,7 +28,7 @@ public class Aluno {
 	@Id
 	private int id;
 	@NotBlank(message = "O CPF é obrigatório!")
-	@Max(14)
+	@Length(min = 11, max = 14, message = "O CPF deverá ter entre {min} e {max} caracteres!")
 	private String cpf;	
 	@NotBlank(message = "O campo NOME é obrigatório, por favor, informe um nome!")
 	@Length(min = 3, max = 35, message = "O nome deverá ter no máximo {max} caracteres")

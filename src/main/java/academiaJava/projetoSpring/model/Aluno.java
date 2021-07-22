@@ -32,10 +32,20 @@ public class Aluno {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@NotBlank(message = "O CPF é obrigatório!")
+
 	private String cpf;	
 	@NotBlank(message = "O campo NOME é obrigatório, por favor, informe um nome!")
 	@Length(min = 3, max = 35, message = "O nome deverá ter no máximo {max} caracteres")
 	private String nome;;
+
+	@Length(min = 11, max = 14, message = "O CPF deverá ter entre {min} e {max} caracteres!")
+	private String cpf;	
+	@NotBlank(message = "O campo NOME é obrigatório, por favor, informe um nome!")
+	@Length(min = 3, max = 35, message = "O nome deverá ter no mínimo {min} e no máximo {max} caracteres")
+	private String nome;
+	@NotBlank(message = "O campo Curso é obrigatório, por favor, informe o nome do curso!")
+	private String nomeCurso;
+
 	@Min(18)
 	private int idade;
 	

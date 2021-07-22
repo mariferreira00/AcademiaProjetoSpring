@@ -1,10 +1,13 @@
 package academiaJava.projetoSpring.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.GroupSequence;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -19,25 +22,26 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "tb_aluno")
 @Entity
 
 @GroupSequence({Aluno.class})
 public class Aluno {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@NotBlank(message = "O CPF é obrigatório!")
-	@Max(14)
 	private String cpf;	
 	@NotBlank(message = "O campo NOME é obrigatório, por favor, informe um nome!")
 	@Length(min = 3, max = 35, message = "O nome deverá ter no máximo {max} caracteres")
-	private String nome;
-	@NotBlank(message = "O campo Curso é obrigatório, por favor, informe o nome do curso!")
-	private String nomeCurso;
+	private String nome;;
 	@Min(18)
 	private int idade;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
+	private Curso curso;
 
 	
 }

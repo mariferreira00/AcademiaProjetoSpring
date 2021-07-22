@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"2\",\r\n    \"nome\": \"Elyne\",\r\n    \"idade\": \"26\",\r\n    \"cpf\": \"123.654.789-85\",\r\n    \"nomeCurso\": \"Programação\"\r\n}",
+					"raw": "{\r\n    \"nome\": \"Giovanna Maria\",\r\n    \"cpf\":\"703.654.782.15\",\r\n    \"idade\": \"19\",\r\n    \"curso\": {\r\n       \"cod\": 3,\r\n        \"nome\": \"Ciência da Dados\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,12 +20,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/aluno/post",
+					"raw": "http://localhost:8081/aluno/post",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"aluno",
 						"post"
@@ -60,7 +60,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/aluno/get/1",
+					"raw": "http://localhost:8081/aluno/get",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -68,8 +68,7 @@
 					"port": "8081",
 					"path": [
 						"aluno",
-						"get",
-						"1"
+						"get"
 					]
 				}
 			},
@@ -82,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"1\",\r\n    \"nome\": \"João Victor Santos\",\r\n    \"idade\": \"27\",\r\n    \"cpf\": \"789.654.321-56\",\r\n    \"nomeCurso\": \"Engenharia de Software\"\r\n}",
+					"raw": "{ \r\n     \"cpf\": \"123.226.987-58\",\r\n     \"nome\": \"Fulano de Tal\",\r\n     \"idade\": 26,\r\n     \"curso\": {\r\n       \"cod\": 3,\r\n        \"nome\": \"Ciência da Dados\"\r\n    }\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +89,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/aluno/put/1",
+					"raw": "http://localhost:8081/aluno/put/14",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +98,7 @@
 					"path": [
 						"aluno",
 						"put",
-						"1"
+						"14"
 					]
 				}
 			},
@@ -111,7 +110,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/aluno/delete/1",
+					"raw": "http://localhost:8081/aluno/delete/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -120,7 +119,7 @@
 					"path": [
 						"aluno",
 						"delete",
-						"1"
+						"6"
 					]
 				}
 			},

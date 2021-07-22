@@ -1,6 +1,8 @@
 package academiaJava.projetoSpring.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.GroupSequence;
@@ -28,6 +30,7 @@ public class Professor{
 	
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotBlank(message = "O CPF é obrigatório, por favor, informe um CPF!")
 	@Length(min = 11, max = 14, message = "O CPF deverá ter entre {min} e {max} caracteres")

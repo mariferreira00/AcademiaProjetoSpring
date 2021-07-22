@@ -1,7 +1,7 @@
 package academiaJava.projetoSpring.controller;
 
-
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,67 +18,63 @@ import org.springframework.web.bind.annotation.RestController;
 import academiaJava.projetoSpring.Repository.AlunoRepository;
 import academiaJava.projetoSpring.model.Aluno;
 
-
 @RestController
 @RequestMapping("/aluno")
 public class AlunoController {
 
-
 	@Autowired
 	private AlunoRepository alunoRepository;
 
-	
+
 	@PostMapping("/post")
-	public Aluno createAluno(@Valid @RequestBody Aluno aluno){
-		
+	public Aluno postAluno(@Valid @RequestBody Aluno aluno) {
 		return this.alunoRepository.save(aluno);
 
 	}
-	
+
 	@GetMapping("/get")
-	public List<Aluno> getAluno() {
+	public List<Aluno> getAlunos() {
 		return this.alunoRepository.findAll();
 	}
-	
+
 	@GetMapping("/get/{id}")
-    public Optional<Aluno> getAlunos(@PathVariable("id") int id) {
+	public Optional<Aluno> getAluno(@PathVariable("id") int id) {
 		return this.alunoRepository.findById(id);
-    	}
-    
-	@PutMapping("/update/{id}")
+	}
+
+	@PutMapping("/put/{id}")
 	public String attAluno(@RequestBody Aluno alunoN, @PathVariable("id") int id) {
-		
+
 		Optional<Aluno> alunoAnt = this.alunoRepository.findById(id);
 		if (alunoAnt.isPresent()) {
 			alunoRepository.delete(alunoAnt.get());
 			Aluno aluno = alunoAnt.get();
 			aluno.setNome(alunoN.getNome());
+			aluno.setCurso(alunoN.getCurso());
 			aluno.setIdade(alunoN.getIdade());
-			aluno.setNomeCurso(alunoN.getNomeCurso());
+			aluno.setCpf(alunoN.getCpf());
 			alunoRepository.save(aluno);
-			
-			return "Os dados do aluno foram alterados com sucesso!";
-		}else {
-			return "Ops... Não encontramos nenhum aluno com este id em nosso sistema, tente novamente!";
+
+			return "Os dados do aluno foram atualizados com sucesso!";
+		} else {
+			return "Ops... Não existe nenhum aluno com este id em nosso sistema, por favor, tente novamente!";
 		}
 	}
 
-	
-	
 	@DeleteMapping("/delete/{id}")
-	public  String deleteAluno(@PathVariable("id") int id) {
-		
-		Optional<Aluno> alunoEncontrado = this.alunoRepository.findById(id);
-		
-		if (alunoEncontrado.isPresent()) {
-			alunoRepository.delete(alunoEncontrado.get());
-			
-			return "O Aluno selecionado foi excluído com sucesso!";
-		}else {
-			
-			return "Ops... Não encontramos nenhum aluno com este id em nosso sistema, tente novamente!";
+	public String deleteAluno(@PathVariable("id") int id) {
+
+		Optional<Aluno> alunoFind = this.alunoRepository.findById(id);
+
+		if (alunoFind.isPresent()) {
+			alunoRepository.delete(alunoFind.get());
+
+			return "O aluno informado foi excluido com sucesso!";
+		} else {
+
+			return "Ops... Não existe nenhum aluno com este id em nosso sistema, por favor, tente novamente!";
 		}
-		
+
 	}
 	
 
